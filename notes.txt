@@ -1,0 +1,31 @@
+
+--------------------------------------------------------------------------------------------------
+
+SECTION 2
+
+Global Object
+- Functions written at the global scope essentially become methods of the global object
+  (in browsers, the window object)
+
+Exectution Context
+- Performed in 2 phases: creation phase and execution phase
+
+Creation Phase
+- Sets up memory space for variables and functions // "hoisting"
+- Function in entirety is put in memory space, but variable declarations are not
+- Variables are all set up as undefined
+
+Undefined
+- A special value to indicate that the variable exists but hasn't been set a value
+- Different from error that it "is not defined"
+- No memory space set up for variable
+
+JA is Single-Threaded
+- One command run at a time
+- JS is single-threaded in the way it runs in the browser, but the browser is not
+- Browser is doing other things besides running JS
+
+JS is Synchronous
+- Run in order, at the time things are requested
+
+--------------------------------------------------------------------------------------------------
