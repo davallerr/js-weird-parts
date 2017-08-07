@@ -28,4 +28,17 @@ JA is Single-Threaded
 JS is Synchronous
 - Run in order, at the time things are requested
 
+Variable Environments
+- Where variables live and how they relate to each other in memory
+
+Scope
+- Possible for 2 different variables to have same name if they sit in different execution contexts
+- Still point to different spaces in memory
+
+Asynchronous
+- Other parts of the browser are able to do things while JS is doing its thing
+- Event Queue: JS is able to be notified of outside activity and respond to it as directed
+- When execution stack is empty, JS can process next event queue and run correspondingly
+- JS only looks at event queue when execution stack is totally empty
+
 --------------------------------------------------------------------------------------------------
