@@ -41,4 +41,84 @@ Asynchronous
 - When execution stack is empty, JS can process next event queue and run correspondingly
 - JS only looks at event queue when execution stack is totally empty
 
+
 --------------------------------------------------------------------------------------------------
+
+SECTION 3
+
+Primitives
+- Undefined: lack of existence, don't se variables to this
+  Null: lack of existence, but the one to use when you want to define a variable without a value
+  Boolean: true or false
+  Number: floating point, always some decimals
+  String: sequence of characters
+  Symbol: new in es6
+- Honorary mention: NaN: cannot be evaluated as a number
+
+Operators
+- A special function that uses a unique (simple) syntax
+- Takes 2 items and returns 1 item, based on what operator is used
+- "Infix" notation
+
+Associativity
+- What oder operator functions are called when functions have the same precedence
+- Either left-to-right, or right-to-left
+  Common math (*/+-) all have left-to-right associativity
+  Assignment(=) has right-to-left associativity
+
+Coercion
+- Converting a value from one type to another
+- JS engine uses context clues of code in some cases other languages would throw an error
+
+Precedence, associativity, and coercion
+- Leads the statement (3 < 2 < 1) to return true
+  < has left-to-right associativity, and evaluates as false, leaving (false < 1)
+  In this case false is coerced to a number, 0, leading to (0 < 1) evaluating as true
+
+Usefulness of coercion
+- if(a) {} can be useful to check for existence of "a"
+  only runs if "a" is undefined, null, 0, "" or other value that converts to false
+
+Default value for variables
+- ES6 has neat thing for providing defaults, but isn't discussed
+- var = var || 'default value'
+- can use || to provide default value, in case that left side of || doesn't exist (converts to false)
+
+Frameworks/Libraries
+- JS links in HTML file are stacked on top of one another and run in sequence like script file
+  Can use default values to prevent colliding variables from other frameworks/libraries
+
+
+--------------------------------------------------------------------------------------------------
+
+SECTION 4
+
+Objects
+- Object sits in memory, and has properties and methods that also sit in memory, to be referenced
+
+Framework aside: faking namespace
+- Namespace is a container for variables and functions
+  JS doesn't have namespaces, but can fake it with objects
+- Use objects as containers so different variables that need the same name don't collide and overwrite
+
+JSON
+- INSPIRED by object literal syntax, but is not the same thing
+- Properties have to be wrapped in quotes in JSON, optional in JS
+- All JSON syntax is valid object literal syntax, but not all object literal syntax is valid JSON
+  JSON is more strict
+  Functions cannot be properites (no methods)
+- JSON.parse takes JSON string and converts it to an object literal syntax
+  This can be assigned to a variable to create an object
+
+Functions are objects
+
+First class functions
+- Everything you can do with other types, you can do with functions
+- Assign them to variables, pass them around, use them as parameters, assign them on the fly
+- Function is a special type of object, with invocable code associated with it as a property
+
+Function statements and expressions
+- Expression: a unit of code that results in a value, even if that value isn't assigned to anything
+- Statement: unit of code that does work, but doesn't return a value
+
+lecture 36
