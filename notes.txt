@@ -1,5 +1,5 @@
 
---------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 
 SECTION 2
 
@@ -42,7 +42,7 @@ Asynchronous
 - JS only looks at event queue when execution stack is totally empty
 
 
---------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 
 SECTION 3
 
@@ -89,7 +89,7 @@ Frameworks/Libraries
   Can use default values to prevent colliding variables from other frameworks/libraries
 
 
---------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 
 SECTION 4
 
@@ -121,4 +121,23 @@ Function statements and expressions
 - Expression: a unit of code that results in a value, even if that value isn't assigned to anything
 - Statement: unit of code that does work, but doesn't return a value
 
-lecture 36
+Value vs reference
+- If a variable's primitive value is copied somehow, it will create a distinct copy
+  Has its own place in memory
+  Further changes to one no longer affect the other
+- If a variable's object value is copied, it uses the same reference in memory
+  Both point to the same place in memory
+  Changes to one will continue to impact the copied reference
+- Equals operator sets up a new memory space if object value doesn't already exist
+
+"This"
+- When code is invoked, an execution context is created, and "this" keyword is created
+- "This" can reference different things depending on how a function is called
+  In basic function invocation, "this" points to global object (often window)
+  In an object's method, "this" points to the object the method sits inside of
+  In an internal function within an object's method, "this" points up to the global object again
+- Workaround: in method where "this" points to object, first line "var self = this;"
+  Use "self" throughout instead of "this"
+  At any point down a scope chain, "self" will always point to the "this" that references the object
+
+  lecture 38
