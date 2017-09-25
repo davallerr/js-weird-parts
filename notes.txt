@@ -140,4 +140,41 @@ Value vs reference
   Use "self" throughout instead of "this"
   At any point down a scope chain, "self" will always point to the "this" that references the object
 
-  lecture 38
+Arrays
+- Arrays can also hold functions
+
+Arguments and spread
+- Set up in execution context of function when called
+- Arguments are hoisted when function's execution context is set up
+  If parameters aren't passed into function, they'll exist but be undefined
+  Function will still run if parameters aren't passed, so defaults can be defined
+- Arguments is array-like, but not a true array
+- Arguments will be deprecated by spread, the ... syntax that wraps into an array in the function
+
+Function overloading
+- In other programming languages, functions can have the same name but different parameters and no error
+- JS gets around this because functions are first class functions, so other patterns achieve it
+
+Syntax parsers
+- Parsers go through code character by character with certain expectations and rules
+  Parser can make changes to code, based on these rules
+
+DANGEROUS ASIDE - syntax parser
+- Automatic semicolon insertion
+  Parser tries to anticipate what code intends, so is able to add semicolons if it thinks they're missing
+- Can cause mistakes based on how code is written
+- Common insertion: new line after "return", parser will insert semicolon right after "return"
+
+Immediately invoked function expressions (IIFE)
+- Function can be invoked immediately upon creation, without being attached to variable or anything
+- Syntax parser can be "tricked" out of thinking an expression should be a function statement
+  Putting it into parentheses makes parser understand it should be an expression
+- (function(parameter) {code}(argument));
+
+IIFEs and safe code
+- IIFEs create execution contexts and prevent colliding and crashing with other code
+- Very useful for frameworks, that will be working with other code that can't be anticipated
+- Other scopes can be accessed by passing parameters into the IIFE
+  Global object can be passed, so its variables can be accessed and changed
+
+Lecture 46 - closures
