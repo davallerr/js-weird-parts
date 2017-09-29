@@ -1,5 +1,6 @@
 
 --------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 
 SECTION 2
 
@@ -42,6 +43,7 @@ Asynchronous
 - JS only looks at event queue when execution stack is totally empty
 
 
+--------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------
 
 SECTION 3
@@ -89,6 +91,7 @@ Frameworks/Libraries
   Can use default values to prevent colliding variables from other frameworks/libraries
 
 
+--------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------
 
 SECTION 4
@@ -177,4 +180,145 @@ IIFEs and safe code
 - Other scopes can be accessed by passing parameters into the IIFE
   Global object can be passed, so its variables can be accessed and changed
 
-Lecture 46 - closures
+Closures
+- Lexical scoping allows returned function to access memory space of containing function
+  Even after the containing function has been removed from the execution context stack
+- Function will always have access to information it is supposed to have, no matter when it's called
+
+
+Classic closure example
+----------------------------------
+
+function buildFunctions() {
+  var arr = [];
+
+  for(var i=0; i<3; i++) {
+    arr.push(
+      function() {
+        console.log(i);
+      }
+    );
+  }
+
+  return arr;
+}
+
+var fs = buildFunctions();
+
+fs[0]();
+fs[1]();
+fs[2]();
+
+----------------------------------
+- Each call logs 3
+  console.log(i) isn't actually called within the for loop
+  Functions that log i aren't called (and therefore executed) until the for loop has run through
+  i is 3 in the memory accessed through closure, all calls are referencing the same outer environment
+  By the time each function is invoked, i is already 3
+- Can be made to count 0-2 using ES6 'let' keyword and setting it to i within each round of the loop
+- Can be done in ES5 using an IIFE to create a new execution context where i is set to j in a new memory space
+
+
+Function factories
+- Closures can be used to generate varying functions based on options that you set
+  var greetEnglish = makeGreeting('en'); vs greetSpanish = makeGreeting('es');
+  greetEnglish('john'); vs greetSpanish('john');
+- Every time you call a function, it gets a new execution context
+  So you can call the factory multiple times, feeding it different options
+  Each created function's closure will still point to the execution context that created it
+
+Callback function
+- Function given to another function to run once the first function finishes
+
+Call, apply, and bind
+- Methods available to all function objects
+
+Bind
+- var newFunction = baseFunction.bind(thing that 'this' should refer to);
+  Creates new function with 'this' manually set, does not execute it
+  Can be called on the fly to make a single use copy to use at the time
+
+Call
+- Adds parameter at time of calling to set what 'this' should refer to
+  Doesn't create a copy of the function, but actually executes it
+  function.call(thisChoice, arg1, arg2);
+
+Apply
+- Similar to 'call' but arguments after what 'this' should be have to be given as an array
+- Can be useful for mathematical applications
+
+Method borrowing
+- Can grab method from one object but set the 'this' keyword to another object
+  person1.getFullName.apply(person2);
+
+Function currying
+- Can use bind with arguments, so new copy of function has permanent parameters
+  function multiply(a, b) { return a*b; }
+  var multiplyByTwo = multiply.bind(this, 2);
+  'a' will always be 2 in new copy
+  multiplyByTwo(4); will return 8
+
+Functional programming
+- Thinking and coding in terms of functions
+  Using an approach based on first class functions
+- Helps keep things DRY by abstracting the work each function does
+
+
+Examples of functional programming
+-----------------------------------------------
+
+function mapForEach(arr, fn) {
+  var newArr = [];
+
+  for(var i=0; i<arr.length; i++) {
+    newArr.push(
+      fn(arr[i])
+    );
+  }
+
+  return newArr;
+}
+
+var arr1 = [1,2,3];
+
+var arr2 = mapForEach(arr1, function(item) {
+  return item * 2;
+});
+
+var arr3 = mapForEach(arr1, function(item) {
+  return item > 2;
+});
+
+var checkPastLimit = function(limiter, item) {
+  return item > limiter;
+}
+
+var arr4 = mapForEach(arr1, checkPastLimit.bind(this, 1));
+
+var checkPastLimitSimple = function(limiter) {
+  return function(limiter, item) {
+    return item > limiter;
+  }.bind(this, limiter);
+}
+
+var arr5 = mapForEach(arr1, checkPastLimitSimple(2));
+
+-----------------------------------------------
+- Helps segment out the work each function does
+  Instead of a doubling function and a limit-checker function that both have to loop through an array
+  You can have a loop array function that other functions can make use of
+- When working in functional programming, small work functions should avoid mutating data
+  Data mutation should happen as far up the chain of work as possible
+
+
+Iteratee or predicate
+- Functions that do work, to be passed into and used by other functions
+- Common in frameworks, like underscore and lodash
+  underscorejs.org/docs/underscore.html
+
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+Section 5
+
+lecture 53
