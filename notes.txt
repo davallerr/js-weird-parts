@@ -321,4 +321,41 @@ Iteratee or predicate
 
 Section 5
 
-lecture 53
+Classical vs prototypal inheritance
+- Classical: verbose, can lead to complex structures of shared information
+- Prototypal: simple, extensible, can be clearer to understand
+
+The prototype
+- Property that references an object where methods can be stored
+  "Proto" properties can be accessed without explicitly directing JS to the protoype property
+  myArray.map() looks like it's accessing the method directly in myArray, but it's actually in the Array object prototype
+- "Proto" can have its own "proto" which creates a "prototype chain"
+  Determines where properies and methods can be accessed by objects further down the protype chain
+- Multiple objects can share a prototype chain, to reference the same methods and properties up the chain
+- BAD PRACTICE
+  Can be set manually: obj2.__proto__ = obj1
+  Makes obj1 the protoype of obj2
+  obj2 can now reference methods defined in obj1 like obj2.getFullName()
+
+Everything is an object (except primitives)
+- And everything that is an object has a prototype
+  Except for the Object object, which is the end of the prototype chain
+
+Reflection
+- An object can look at itself, listing and changing its properties and methods
+  for(var prop in obj1) {
+    if(john.hasOwnProperty(prop)) {
+      only activates if prop is direct property of obj1, not its prototype;
+    }
+  }
+- Objects can access their own metadata and know things about it
+  Like if it's a direct property or part of its prototype (hasOwnProperty)
+
+Extend
+- Uses reflection to access other objects' properties/methods, and copy them to target object
+
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+Section 6
+
