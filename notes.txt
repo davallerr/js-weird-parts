@@ -359,3 +359,146 @@ Extend
 
 Section 6
 
+Class - function constructors
+- JS up to ES5 doesn't really have classes the way other languages do
+  Class keyword upcoming
+- Something like a class can be created by object constructor function
+  var john = new Person();
+  "new" keyword immediately creates an empty object
+  "new" changes what happens with "this" and what is returned
+  The constructor function's "this" keyword then points to that newly created empty object
+  As long as constructor doesn't have its own "return" value, it returns the new object
+
+Setting prototype
+- Function constructor method automatically set as the prototype of objects created using it
+- The "prototype" property of a function IS NOT the prototype of the function
+  It is the prototype of any objects created if the function is used as a constructor
+- Person.prototype doesn't point to Person's prototype
+  It refers to content in Person's prototype property
+  Objects created using the Person constructor can access methods and stuff in there
+  Objects to which Person is the prototype (john, jane, if they were created using Person)
+- Adding methods to Person's prototype becomes more efficient than including it in the constructor function
+  If methods are defined with the constructor function, every object created using it gets a new COPY of it
+  Using Person.prototype.newMethod creates it once, but every object can use it
+
+"New" and functions
+- If a function constructor is called without "new" the new variable you're trying to create will be undefined
+  It will just call the function, and since it doesn't return anything nothing will be put in the variable
+
+Built-in function constructors
+- var a = new Number(3);
+  a will become an object containing a "[PrimitiveValue]" of 3
+- var a = new String('John');
+  a is an object with a bunch of key/value pairs for each character, and a "[PrimitiveValue]" of "John"
+- var a = new Date('3/1/2015');
+- Built-in function constructors can have methods added to their prototype property
+  All objects with that built-in function constructor as a prototype will have access to it
+  Have to be careful not to overwrite existing ones and eff the language up
+- Some things will be automatically treated like an object, with access to prototypes
+  Others don't, like a variable assigned as a number without using the new Number(3) syntax
+  var a = 3;
+  var b = new Number(3);
+  a == b // returns true
+  a === b // returns false
+  Variable b is an object, not a primitive
+- Can be dangerous to use built-in function constructors because what's created will be an object
+  Moment.js is great for working with dates without using the Date() constructor
+
+Arrays and for...in
+- An array is an object, and items in it are basically properties assigned a numerical key
+  Anything added to Array's prototype property will therefore be available in all arrays
+  These will be considered if the array is iterated over using the "for(var prop in arr)" syntax
+- Always using "for(var i=0; i<arr.length; i++)" to iterate over arrays
+  Iterating this way won't get into the array's prototype methods
+
+Object.create and pure prototypical inheritance
+- var john = Object.create(Person);
+  Object.create() creates a new empty object with the argument passed as the prototype
+- Doesn't try to imitate how other languages handle classes and inheritance
+
+Polyfill
+- Code that adds a feature that the engine may lack
+  Checks if environment has feature, and if not creates feature so it can be used in rest of code 
+  Lets you use newer features, but still support older browsers/environments
+
+
+Example polyfill that creates Object.create functionality
+-----------------------------------------------
+
+if(!Object.create) {
+  Object.create = function(o) {
+    if(arguments.length > 1) {
+      throw new Error('Object.create implementation only accepts the first parameter.');
+    }
+    function F() {}
+    F.prototype = o;
+    return new F();
+  };
+}
+
+-----------------------------------------------
+- If browser supports Object.create, browser will just skip it
+
+ES6 and classes
+- The "class" created using new syntax will still be an object
+  Still different from how other languages handle classes
+  class Person {
+    constructor(prop1, prop2) {
+      this.prop1 = prop1;
+      this.prop2 = prop2;
+    }
+
+    method1() {
+      do something, maybe using prop1;
+    }
+  }
+  var john = new Person('first prop', 'second prop');
+- Mostly just ensures an error will occur if "new" isn't used to create new object with it
+- Set prototype:
+  class InformalPerson extends Person {
+    constructor(prop1, prop2) {
+      super(prop1, prop2);
+    }
+
+    method1() {
+      overwrites prototypes method with same name
+    }
+  }
+
+Syntactic sugar
+- A different way to type something that doesn't actually change how it works under the hood
+  "class" keyword is sugar, doesn't change fact of protypal inheritance
+
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+Section 7
+
+Initialization
+- Big bunch of organized data, like an array of objects that each contain arrays, child objects, etc
+
+typeof, instanceof, and figuring out what something is
+- typeof tells you what kind of data a variable is
+  Doesn't work great for arrays, because array's are also objects
+  typeof null; returns object (this is a bug but there are frameworks that rely on it working that way)
+  Object.prototype.toString.call(var); works better, if an array it returns [Object Array]
+- var intanceof PossibleProto; tells you if "var" at any point has PossibleProto in its prototype chain
+
+Strict mode
+- "use strict";
+- Makes JS throw errors for some things it would otherwise allow
+  person = {}; would error
+  var person = {}; no errors
+
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+Section 8
+
+Learning from others' good code
+- Open source education
+  Read source code of good frameworks and libraries, and read how they handle things
+  Can read ish right on github
+
+lecture 70
+jQuery deep dive
